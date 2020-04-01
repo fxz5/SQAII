@@ -1,0 +1,12 @@
+{
+  "name": "testcafe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "testcafe chrome tests/suites/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
