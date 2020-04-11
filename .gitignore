@@ -9,3 +9,5 @@ android-testing/.idea/vcs.xml
 .idea/modules.xml
 .idea/SQAII.iml
 .idea/vcs.xml
+android-testing/data/phone.json
+android-testing/data/phone.json

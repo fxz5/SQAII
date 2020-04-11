@@ -1,10 +1,12 @@
 from uiautomator import device
 from models.manager import DeviceManager
 from suites.phonecall import PhoneCall
-print("Hello, tester")
+from suites.wifi_settings import WiFiSettings
 
-dev_man = DeviceManager(1)
+dev_man = DeviceManager()
 
 phone_suite = PhoneCall(dev_man)
+wifi_suite = WiFiSettings(dev_man)
 
-phone_suite.call_number_adb()
+#wifi_suite.turn_on_wifi()
+phone_suite.call_number_adb(True)
