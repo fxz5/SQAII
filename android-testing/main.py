@@ -5,8 +5,8 @@ from suites.wifi_settings import WiFiSettings
 
 dev_man = DeviceManager()
 
-phone_suite = PhoneCall(dev_man)
+phone_suite = PhoneCall(dev_man, True)
 wifi_suite = WiFiSettings(dev_man)
 
-#wifi_suite.turn_on_wifi()
+# wifi_suite.turn_on_wifi()
 phone_suite.call_number_adb(True)

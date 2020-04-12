@@ -24,9 +24,9 @@ class Utils:
     @staticmethod
     def wait_normal(extra=False):
         if extra:
-            time.sleep(1)
-        else:
             time.sleep(3)
+        else:
+            time.sleep(1)
 
     @staticmethod
     def wait_long():
