@@ -1,63 +1,93 @@
 import json
 from subprocess import call, check_call
+import datetime
 
+from models.exceptions import CallFailed
 from models.manager import DeviceManager
-from utils.utils import AppManager, Utils
+from suites.suite import Suite
+from utils.utils import AppManager, Utils, Logger
 
 
-class PhoneCall:
-    total_tests = 2
+class PhoneCall(Suite):
+    total_tests = 0
     passed_tests = 0
     failed_tests = 0
 
-    def __init__(self, d, adb_only=False):
-        # type: (DeviceManager, bool) -> None
-        self.device = d.get_device()
-        self.serial = d.get_serial()
+    def __init__(self, d, logger, adb_only=False):
+        # type: (DeviceManager, Logger, bool) -> None
+        print "Initializing PhoneCall Component"
+        Suite.__init__(self, d, logger)
         self.adb = adb_only
         self.app = "Phone"
         self.package = "com.google.android.dialer"
-        print "Initializing PhoneCall Component"
+        self.module = "PhoneCall"
+
+    def execute_suite(self):
+        self.call_number_adb(True)
+        self.call_number_adb(False)
 
     def call_number_adb(self, use_json=False):
+        test_case_name = "Phone Number Dialing"
+        current_test_case = ""
+        start_time = datetime.datetime.now()
         phone_numbers = []
-        if not use_json:
-            amount = int(input("how many numbers do you want to test? "))
-            for i in range(amount):
-                number = input("enter phone number " + str(i) + ": ")
-                phone_numbers.append(number)
-            print phone_numbers
-        else:
-            with open('data/phone.json') as json_file:
-                data = json.load(json_file)
-                phone_numbers = data['phone_numbers']
-
-        # Actual Calling of Numbers
-        for number in phone_numbers:
-            if self.adb:
-                check_call(['adb', '-s', self.serial, 'shell', 'am', 'start',
-                            '-a', 'android.intent.action.CALL', '-d',
-                            'tel:' + str(number)
-                            ])
-                Utils.wait_long()
-                self.__end_call()
-
+        try:
+            if not use_json:
+                test_case_name += "-Manual"
+                current_test_case = ""
+                amount = int(input("how many numbers do you want to test? "))
+                for i in range(amount):
+                    number = input("enter phone number " + str(i) + ": ")
+                    phone_numbers.append(number)
             else:
-                self.test_conditions()
-                Utils.wait_normal()
-                self.device(
-                    resourceId="com.google.android.dialer:id/fab") \
-                    .click()
-                print "Dialing: " + number
-                for digit in number:
-                    self.__click_dial_number(digit)
-                    Utils.wait_short()
-                self.device(
-                    resourceId="com.google.android.dialer:id"
-                               "/dialpad_voice_call_button") \
-                    .click()
-                Utils.wait_normal(True)
-                self.__end_call()
+                test_case_name += "-JSON"
+                with open('data/phone.json') as json_file:
+                    data = json.load(json_file)
+                    phone_numbers = data['phone_numbers']
+
+            # Actual Calling of Numbers
+            for number in phone_numbers:
+                current_test_case = test_case_name + "-" + number
+                if self.adb:
+                    check_call(
+                        ['adb', '-s', self.serial, 'shell', 'am', 'start',
+                         '-a', 'android.intent.action.CALL', '-d',
+                         'tel:' + str(number)
+                         ])
+                    Utils.wait_long()
+                    self.__end_call()
+                    self.logger.log(start_time, datetime.datetime.now(),
+                                    self.module,
+                                    current_test_case, "SUCCESS",
+                                    "")
+                    self.pass_test()
+                else:
+                    self.test_conditions()
+                    Utils.wait_normal()
+                    self.device(
+                        resourceId="com.google.android.dialer:id/fab") \
+                        .click()
+                    for digit in number:
+                        self.__click_dial_number(digit)
+                        Utils.wait_short()
+                    self.device(
+                        resourceId="com.google.android.dialer:id"
+                                   "/dialpad_voice_call_button") \
+                        .click()
+                    Utils.wait_normal(True)
+                    self.__end_call()
+                    self.logger.log(start_time, datetime.datetime.now(),
+                                    self.module,
+                                    current_test_case, "SUCCESS",
+                                    "")
+                    self.pass_test()
+            self.evaluate_module()
+        except Exception as e:
+            end_time = datetime.datetime.now()
+            self.logger.log(start_time, end_time, self.module,
+                            current_test_case,
+                            "ERROR", str(e) + e.message)
+            self.fail_test()
 
     def __end_call(self):
         """
@@ -72,18 +102,24 @@ class PhoneCall:
                 if self.device(text="Cancel",
                                className="android.widget.Button") \
                         .exists:
-                    print "ending call with cancel"
                     self.device(text="Cancel",
                                 className="android.widget.Button") \
                         .click()
+                    # raise CallFailed("mobile network unavailable")
+                elif self.device(text="OK",
+                                 className="android.widget.Button") \
+                        .exists:
+                    self.device(text="OK",
+                                className="android.widget.Button") \
+                        .click()
+                    # raise CallFailed("network not available")
                 else:
-                    print "ending call with red button"
                     self.device(
                         resourceId="com.google.android.dialer:id/incall_end_call") \
                         .click()
                 Utils.wait_normal()
         except Exception as e:
-            print str(e)
+            raise e
 
     def __click_dial_number(self, digit):
         # type: (str) -> None
@@ -117,8 +153,3 @@ class PhoneCall:
         AppManager.kill_app(self.serial, self.package)
         AppManager.open_app(self.device, self.serial, self.app)
 
-    def fail_test(self):
-        pass
-
-    def pass_test(self):
-        pass

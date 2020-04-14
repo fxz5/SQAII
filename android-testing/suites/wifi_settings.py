@@ -2,23 +2,23 @@ from uiautomator import Device
 import time
 import logging
 
-from utils.utils import Utils
+from suites.suite import Suite
+from utils.utils import Utils, Logger
 from models.manager import DeviceManager
 
 
-class WiFiSettings:
-    total_tests = 2
-    passed_tests = 0
-    failed_tests = 0
+class WiFiSettings(Suite):
 
-    def __init__(self, d, adb_only=False):
-        # type: (DeviceManager, bool) -> None
-        self.device = d.get_device()
-        self.serial = d.get_serial()
+    def __init__(self, d, logger, adb_only=False):
+        # type: (DeviceManager, Logger, bool) -> None
+        logging.info("Initializing WiFiSettings Component")
+        Suite.__init__(self, d, logger)
         self.app = "Phone"
         self.package = "com.google.android.dialer"
         logging.basicConfig(filename='example.log', level=logging.DEBUG)
-        logging.info("Initializing WiFiSettings Component")
+
+    def execute_suite(self):
+        pass
 
     def turn_on_wifi(self):
         # Test Conditions

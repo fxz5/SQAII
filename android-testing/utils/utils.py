@@ -1,5 +1,7 @@
-from subprocess import check_call, check_output, call
 import time
+from subprocess import check_call, call
+import datetime
+import os
 
 from uiautomator import Device
 
@@ -72,3 +74,30 @@ class AppManager:
              package_name]
         )
         time.sleep(0.3)
+
+
+class Logger:
+
+    def __init__(self):
+        # Session Initialized
+        today = datetime.datetime.today()
+
+        self.file = os.path.join("log",
+                                 today.strftime("%Y-%m-%d") + "-" + "log.csv")
+        if not os.path.exists('log'):
+            os.makedirs('log')
+
+    def log(self, start, end, module, test, status, error):
+        # type: (datetime.datetime, datetime.datetime,str, str, str, str) -> None
+        with open(self.file, "a+") as logfile:
+            log_string = "\n{}, {}, {}, {}, {}, {}, {}" \
+                .format(
+                    start.strftime("%H:%M:%S"),
+                    end.strftime("%H:%M:%S"),
+                    end-start,
+                    module,
+                    test,
+                    status,
+                    error
+                )
+            logfile.write(log_string)
