@@ -37,7 +37,7 @@ class PhoneCall(Suite):
                 current_test_case = ""
                 amount = int(input("how many numbers do you want to test? "))
                 for i in range(amount):
-                    number = input("enter phone number " + str(i) + ": ")
+                    number = input("enter phone number " + str(i+1) + ": ")
                     phone_numbers.append(number)
             else:
                 test_case_name += "-JSON"
@@ -56,7 +56,7 @@ class PhoneCall(Suite):
                          ])
                     Utils.wait_long()
                     self.__end_call()
-                    self.logger.log(start_time, datetime.datetime.now(),
+                    self.logger.log(start_time,
                                     self.module,
                                     current_test_case, "SUCCESS",
                                     "")
@@ -76,15 +76,14 @@ class PhoneCall(Suite):
                         .click()
                     Utils.wait_normal(True)
                     self.__end_call()
-                    self.logger.log(start_time, datetime.datetime.now(),
+                    self.logger.log(start_time,
                                     self.module,
                                     current_test_case, "SUCCESS",
                                     "")
                     self.pass_test()
-            self.evaluate_module()
         except Exception as e:
             end_time = datetime.datetime.now()
-            self.logger.log(start_time, end_time, self.module,
+            self.logger.log(start_time, self.module,
                             current_test_case,
                             "ERROR", str(e) + e.message)
             self.fail_test()

@@ -87,9 +87,10 @@ class Logger:
         if not os.path.exists('log'):
             os.makedirs('log')
 
-    def log(self, start, end, module, test, status, error):
-        # type: (datetime.datetime, datetime.datetime,str, str, str, str) -> None
+    def log(self, start, module, test, status, error):
+        # type: (datetime.datetime,str, str, str, str) -> None
         with open(self.file, "a+") as logfile:
+            end = datetime.datetime.now()
             log_string = "\n{}, {}, {}, {}, {}, {}, {}" \
                 .format(
                     start.strftime("%H:%M:%S"),

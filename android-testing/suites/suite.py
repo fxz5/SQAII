@@ -20,6 +20,7 @@ class Suite:
         print "Module has passed {}% of its tests ({} out of {})" \
             .format(self.passed_tests / self.total_tests * 100.0,
                     self.passed_tests, self.total_tests)
+        return self.passed_tests, self.failed_tests, self.total_tests
 
     def fail_test(self):
         self.failed_tests += 1
@@ -34,3 +35,29 @@ class Suite:
 
     def test_conditions(self):
         pass
+
+
+class TestRun:
+
+    def __init__(self):
+        self.tests = list()
+
+    def add_suite(self, suite):
+        # type: (Suite) -> None
+        self.tests.append(suite)
+
+    def execute_all_suites(self):
+        tp = 0
+        tf = 0
+        tt = 0
+        for i in self.tests:
+            i.execute_suite()
+            p, f, t = i.evaluate_module()
+            tp += p
+            tf += f
+            tt += t
+
+        print "Test finished with {}% of its tests ({} out of {})" \
+            .format(tp / tt * 100.0,
+                    tp, tt)
+

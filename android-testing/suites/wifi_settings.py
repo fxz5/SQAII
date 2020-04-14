@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from uiautomator import Device
 import time
 import logging
@@ -18,28 +20,55 @@ class WiFiSettings(Suite):
         logging.basicConfig(filename='example.log', level=logging.DEBUG)
 
     def execute_suite(self):
-        pass
+        self.turn_off_wifi()
+        self.turn_on_wifi()
 
     def turn_on_wifi(self):
-        # Test Conditions
-        Utils.start_home(self.serial)
-        self.device.open.quick_settings()
-        if not self.__get_toggle_info(0):
-            self.__toggle_wifi()
-        else:
-            self.__toggle_wifi()
-            self.__toggle_wifi()
-        Utils.wait_long()
+        start_time = datetime.now()
+        current_test_case = "WiFi Turn On"
+        try:
+            # Test Conditions
+            Utils.start_home(self.serial)
+            self.device.open.quick_settings()
+            if not self.__get_toggle_info(0):
+                self.__toggle_wifi()
+            else:
+                self.__toggle_wifi()
+                self.__toggle_wifi()
+            Utils.wait_long()
+            self.pass_test()
+            self.logger.log(start_time,
+                            self.module,
+                            current_test_case, "SUCCESS",
+                            "")
+        except Exception as e:
+            self.fail_test()
+            self.logger.log(start_time, self.module,
+                            current_test_case,
+                            "ERROR", str(e) + e.message)
 
     def turn_off_wifi(self):
-        Utils.start_home()
-        self.device.open.quick_settings()
-        if self.__get_toggle_info(0):
-            self.__toggle_wifi()
-        else:
-            self.__toggle_wifi()
-            self.__toggle_wifi()
-        Utils.wait_long()
+        start_time = datetime.now()
+        current_test_case = "WiFi Turn Off"
+        try:
+            Utils.start_home(self.serial)
+            self.device.open.quick_settings()
+            if self.__get_toggle_info(0):
+                self.__toggle_wifi()
+            else:
+                self.__toggle_wifi()
+                self.__toggle_wifi()
+            Utils.wait_long()
+            self.pass_test()
+            self.logger.log(start_time,
+                            self.module,
+                            current_test_case, "SUCCESS",
+                            "")
+        except Exception as e:
+            self.fail_test()
+            self.logger.log(start_time, self.module,
+                            current_test_case,
+                            "ERROR", str(e) + e.message)
 
     def __toggle_wifi(self):
         self.device.open.quick_settings()
