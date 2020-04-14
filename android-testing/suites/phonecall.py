@@ -23,8 +23,8 @@ class PhoneCall(Suite):
         self.module = "PhoneCall"
 
     def execute_suite(self):
-        self.call_number_adb(True)
         self.call_number_adb(False)
+        self.call_number_adb(True)
 
     def call_number_adb(self, use_json=False):
         test_case_name = "Phone Number Dialing"
@@ -47,7 +47,7 @@ class PhoneCall(Suite):
 
             # Actual Calling of Numbers
             for number in phone_numbers:
-                current_test_case = test_case_name + "-" + number
+                current_test_case = test_case_name + "-" + str(number)
                 if self.adb:
                     check_call(
                         ['adb', '-s', self.serial, 'shell', 'am', 'start',
@@ -67,7 +67,7 @@ class PhoneCall(Suite):
                     self.device(
                         resourceId="com.google.android.dialer:id/fab") \
                         .click()
-                    for digit in number:
+                    for digit in str(number):
                         self.__click_dial_number(digit)
                         Utils.wait_short()
                     self.device(
@@ -82,7 +82,6 @@ class PhoneCall(Suite):
                                     "")
                     self.pass_test()
         except Exception as e:
-            end_time = datetime.datetime.now()
             self.logger.log(start_time, self.module,
                             current_test_case,
                             "ERROR", str(e) + e.message)
