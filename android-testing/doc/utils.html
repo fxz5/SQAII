@@ -1,0 +1,107 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module utils</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>utils</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href="..">index</a><br><a href="file:/Users/luiscorrea/Documents/GitHub/SQAII/android-testing/utils/utils.py">/Users/luiscorrea/Documents/GitHub/SQAII/android-testing/utils/utils.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="datetime.html">datetime</a><br>
+</td><td width="25%" valign=top><a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="time.html">time</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="utils.html#AppManager">AppManager</a>
+</font></dt><dt><font face="helvetica, arial"><a href="utils.html#Logger">Logger</a>
+</font></dt><dt><font face="helvetica, arial"><a href="utils.html#PhoneUtils">PhoneUtils</a>
+</font></dt><dt><font face="helvetica, arial"><a href="utils.html#Utils">Utils</a>
+</font></dt></dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="AppManager">class <strong>AppManager</strong></a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="AppManager-__init__"><strong>__init__</strong></a>(self)</dt></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="AppManager-kill_app"><strong>kill_app</strong></a>(device_serial, package_name)</dt><dd><tt>Kills&nbsp;and&nbsp;app&nbsp;from&nbsp;the&nbsp;background&nbsp;given&nbsp;the&nbsp;package&nbsp;name.</tt></dd></dl>
+
+<dl><dt><a name="AppManager-open_app"><strong>open_app</strong></a>(device, device_serial, app_name)</dt><dd><tt>Opens&nbsp;an&nbsp;app&nbsp;given&nbsp;a&nbsp;name&nbsp;from&nbsp;the&nbsp;home&nbsp;screen.</tt></dd></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Logger">class <strong>Logger</strong></a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Logger-__init__"><strong>__init__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Logger-log"><strong>log</strong></a>(self, start, module, test, status, error)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="PhoneUtils">class <strong>PhoneUtils</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Static&nbsp;methods&nbsp;that&nbsp;provide&nbsp;functionality&nbsp;for&nbsp;the&nbsp;Phone&nbsp;Android&nbsp;app.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="PhoneUtils-__init__"><strong>__init__</strong></a>(self)</dt></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="PhoneUtils-click_dial_number"><strong>click_dial_number</strong></a>(device, digit)</dt><dd><tt>Uses&nbsp;UIAutomator&nbsp;to&nbsp;click&nbsp;each&nbsp;digit&nbsp;of&nbsp;a&nbsp;phone&nbsp;number.</tt></dd></dl>
+
+<dl><dt><a name="PhoneUtils-end_call"><strong>end_call</strong></a>(device, use_adb<font color="#909090">=False</font>)</dt><dd><tt>Ends&nbsp;a&nbsp;call&nbsp;given&nbsp;an&nbsp;interface&nbsp;method&nbsp;(adb&nbsp;or&nbsp;UIAutomator)&nbsp;and&nbsp;returns<br>
+a&nbsp;boolean&nbsp;indicating&nbsp;if&nbsp;the&nbsp;call&nbsp;was&nbsp;ended&nbsp;after&nbsp;being&nbsp;successful.</tt></dd></dl>
+
+<dl><dt><a name="PhoneUtils-open_dialer"><strong>open_dialer</strong></a>(device)</dt><dd><tt>Opens&nbsp;phone&nbsp;dialer</tt></dd></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Utils">class <strong>Utils</strong></a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Utils-__init__"><strong>__init__</strong></a>(self)</dt></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="Utils-start_home"><strong>start_home</strong></a>(device_serial)</dt></dl>
+
+<dl><dt><a name="Utils-wait_long"><strong>wait_long</strong></a>()</dt></dl>
+
+<dl><dt><a name="Utils-wait_normal"><strong>wait_normal</strong></a>(extra<font color="#909090">=False</font>)</dt></dl>
+
+<dl><dt><a name="Utils-wait_short"><strong>wait_short</strong></a>()</dt></dl>
+
+</td></tr></table></td></tr></table>
+</body></html>

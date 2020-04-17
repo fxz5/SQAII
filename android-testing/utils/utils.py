@@ -5,14 +5,90 @@ import os
 
 from uiautomator import Device
 
+from models.exceptions import CallFailed
+
 
 class PhoneUtils:
     """
-    d: adb device object to perform actions on.
+    Static methods that provide functionality for the Phone Android app.
     """
 
-    def __init__(self, d):
-        self.device = d
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def click_dial_number(device, digit):
+        # type: (Device, str) -> None
+        """
+        Uses UIAutomator to click each digit of a phone number.
+        """
+        if digit == '+':
+            device(
+                text='0', resourceId="com.google.android.dialer:id"
+                                     "/dialpad_key_number") \
+                .long_click()
+        elif digit == '#':
+            device(
+                className="android.widget.FrameLayout",
+                resourceId="com.google.android.dialer:id/pound") \
+                .click()
+        elif digit == '*':
+            device(
+                className="android.widget.FrameLayout",
+                resourceId="com.google.android.dialer:id/star") \
+                .click()
+        else:
+            device(
+                text=digit,
+                resourceId="com.google.android.dialer:id"
+                           "/dialpad_key_number") \
+                .click()
+
+    @staticmethod
+    def end_call(device, use_adb=False):
+        # type: (Device, bool) -> (bool, Exception)
+        """
+        Ends a call given an interface method (adb or UIAutomator) and returns
+        a boolean indicating if the call was ended after being successful.
+        """
+        if use_adb:
+            check_call([
+                'adb', 'shell', 'input', 'keyevent', 'KEYCODE_ENDCALL'
+            ])
+            Utils.wait_short()
+            return True
+        else:
+            try:
+                if device(text="Cancel",
+                               className="android.widget.Button") \
+                        .exists:
+                    device(text="Cancel",
+                                className="android.widget.Button") \
+                        .click()
+                    raise CallFailed("mobile network unavailable")
+                elif device(text="OK",
+                                 className="android.widget.Button") \
+                        .exists:
+                    device(text="OK",
+                                className="android.widget.Button") \
+                        .click()
+                    raise CallFailed("network not available")
+                else:
+                    device(
+                        resourceId="com.google.android.dialer:id/incall_end_call") \
+                        .click()
+                Utils.wait_normal()
+                return True
+            except Exception as e:
+                return False, e
+
+    @staticmethod
+    def open_dialer(device):
+        # type: (Device) -> None
+        """
+        Opens phone dialer
+        """
+        pass
 
 
 class Utils:

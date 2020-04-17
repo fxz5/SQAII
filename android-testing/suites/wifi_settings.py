@@ -17,6 +17,7 @@ class WiFiSettings(Suite):
         Suite.__init__(self, d, logger)
         self.app = "Phone"
         self.package = "com.google.android.dialer"
+        self.module = "WiFi Settings"
         logging.basicConfig(filename='example.log', level=logging.DEBUG)
 
     def execute_suite(self):
