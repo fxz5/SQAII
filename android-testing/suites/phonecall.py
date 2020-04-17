@@ -4,7 +4,7 @@ import datetime
 from models.exceptions import CallFailed
 from models.manager import DeviceManager
 from suites.suite import Suite
-from utils.utils import AppManager, Utils, Logger, PhoneUtils
+from utils.utils import AppUtils, Utils, Logger, PhoneUtils
 
 
 class PhoneCallSuite(Suite):
@@ -81,6 +81,6 @@ class PhoneCallSuite(Suite):
         Sets the initial test conditions for all tests.
         """
         Utils.start_home(self.serial)
-        AppManager.kill_app(self.serial, self.package)
-        AppManager.open_app(self.device, self.serial, self.app)
+        AppUtils.kill_app(self.serial, self.package)
+        AppUtils.open_app(self.device, self.serial, self.app)
 

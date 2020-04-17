@@ -171,7 +171,7 @@ class Utils:
         Utils.wait_short()
 
 
-class AppManager:
+class AppUtils:
     """
     Utilities that allow to change an app's state. Open, closing and switching
     app logic is handled by this class.
