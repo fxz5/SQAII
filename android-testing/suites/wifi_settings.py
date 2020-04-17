@@ -9,7 +9,7 @@ from utils.utils import Utils, Logger
 from models.manager import DeviceManager
 
 
-class WiFiSettings(Suite):
+class WiFiSettingsSuite(Suite):
 
     def __init__(self, d, logger, adb_only=False):
         # type: (DeviceManager, Logger, bool) -> None

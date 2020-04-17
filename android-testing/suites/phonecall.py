@@ -7,7 +7,7 @@ from suites.suite import Suite
 from utils.utils import AppManager, Utils, Logger, PhoneUtils
 
 
-class PhoneCall(Suite):
+class PhoneCallSuite(Suite):
     total_tests = 0
     passed_tests = 0
     failed_tests = 0
