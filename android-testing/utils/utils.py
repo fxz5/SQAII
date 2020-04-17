@@ -47,7 +47,8 @@ class PhoneUtils:
     def click_dial_number(device, digit):
         # type: (Device, str) -> None
         """
-        Uses UIAutomator to click each digit of a phone number.
+        Exclusive to UIAutomator, function clicks the desired digit in a
+        specified device.
         """
         if digit == '+':
             device(
@@ -119,15 +120,26 @@ class PhoneUtils:
 
 
 class Utils:
+    """
+    Miscellaneous utilities for handling apps and wait times between actions.
+    """
     def __init__(self):
         pass
 
     @staticmethod
     def wait_short():
+        """
+        Waits a short time of 0.5 seconds.
+        """
         time.sleep(0.5)
 
     @staticmethod
     def wait_normal(extra=False):
+        # type: (bool) -> None
+        """
+            Waits a normal time of 1 second. If the extra flag is true, time
+            adds to 3 seconds.
+        """
         if extra:
             time.sleep(3)
         else:
@@ -135,17 +147,23 @@ class Utils:
 
     @staticmethod
     def wait_long():
+        """
+        Waits for a long 10 second time.
+        """
         time.sleep(10)
 
     @staticmethod
     def start_home(device_serial):
+        # type: (str) -> None
+        """
+        Uses adb connection trough a specified serial so that the phone it
+        forced to go to the home screen.
+        """
         call(
             ['adb', '-s', device_serial, 'shell', 'input keyevent',
              'KEYCODE_WAKEUP']
         )
         Utils.wait_short()
-
-        # Go home
         call(
             ['adb', '-s', device_serial, 'shell', 'input keyevent',
              'KEYCODE_HOME']
@@ -154,6 +172,11 @@ class Utils:
 
 
 class AppManager:
+    """
+    Utilities that allow to change an app's state. Open, closing and switching
+    app logic is handled by this class.
+    """
+
     def __init__(self):
         pass
 
@@ -170,7 +193,8 @@ class AppManager:
     def kill_app(device_serial, package_name):
         # type: (str, str) -> None
         """
-        Kills and app from the background given the package name.
+        Kills and app though adb and a device's serial connection. Removes
+        app from the background given the package name.
         """
         check_call(
             ['adb', '-s', device_serial, 'shell', 'am', 'force-stop',
@@ -180,9 +204,15 @@ class AppManager:
 
 
 class Logger:
-
+    """
+    Main structure and functions to interact and write to a logfile in csv
+    format.
+    """
     def __init__(self):
         # Session Initialized
+        """
+        Creates necessary directories and files for the logfile to work.
+        """
         today = datetime.datetime.today()
 
         self.file = os.path.join("log",
@@ -192,6 +222,10 @@ class Logger:
 
     def log(self, start, module, test, status, error):
         # type: (datetime.datetime,str, str, str, str) -> None
+        """
+        Logs a message in the specified csv format to disk. default directory
+        is log/
+        """
         with open(self.file, "a+") as logfile:
             end = datetime.datetime.now()
             log_string = "\n{}, {}, {}, {}, {}, {}, {}" \
