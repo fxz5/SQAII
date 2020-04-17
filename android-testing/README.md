@@ -4,12 +4,22 @@ Maintained by Luis Correa
 luiscorrea9614@gmail.com
 
 ## Run Instructions
-1. Create a new venv environment using Python 2.7.x and venv
-2. Install project dependencies using
+1. Clone the repo  
+```console
+git clone https://github.com/PrettyBoyHelios/SQAII
+cd SQAII/android-testing
+```  
+2. Create a new venv environment using Python 2.7.x and venv, and then proceed to activate the new virtual environment.  
+```console
+pip install virtualenv
+virtualenv --python=<path/to/installed/python2.7+/> <venv/>
+source env/bin/activate
+```  
+3. Install project dependencies using  
 ```console
 pip install -r requirements.txt
 ```  
-3. Run main file
+4. Run main file  
 ```console
 python main.py
 ```
