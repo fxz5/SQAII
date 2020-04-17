@@ -1,0 +1,82 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module suite</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>suite</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/luiscorrea/Documents/GitHub/SQAII/android-testing/suites/suite.py">/Users/luiscorrea/Documents/GitHub/SQAII/android-testing/suites/suite.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="suite.html#Suite">Suite</a>
+</font></dt><dt><font face="helvetica, arial"><a href="suite.html#TestRun">TestRun</a>
+</font></dt></dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Suite">class <strong>Suite</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>This&nbsp;class&nbsp;makes&nbsp;every&nbsp;TestSuite&nbsp;class&nbsp;modular&nbsp;and&nbsp;compatible&nbsp;with&nbsp;the<br>
+overall&nbsp;framework.&nbsp;This&nbsp;class&nbsp;abstracts&nbsp;the&nbsp;common&nbsp;behaviour&nbsp;of&nbsp;all<br>
+independent&nbsp;Test&nbsp;Suites,&nbsp;and&nbsp;yet&nbsp;provides&nbsp;enough&nbsp;rigidity&nbsp;to&nbsp;provide<br>
+powerful&nbsp;features&nbsp;such&nbsp;as&nbsp;logging,&nbsp;error&nbsp;reporting&nbsp;and&nbsp;on&nbsp;the&nbsp;go&nbsp;status.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Suite-__init__"><strong>__init__</strong></a>(self, d, logger)</dt><dd><tt>Initializes&nbsp;main&nbsp;components&nbsp;of&nbsp;the&nbsp;suite,&nbsp;the&nbsp;Device,&nbsp;Serial&nbsp;and<br>
+Logger&nbsp;references&nbsp;for&nbsp;all&nbsp;the&nbsp;suites&nbsp;to&nbsp;add.</tt></dd></dl>
+
+<dl><dt><a name="Suite-evaluate_module"><strong>evaluate_module</strong></a>(self)</dt><dd><tt>Performs&nbsp;a&nbsp;self&nbsp;evaluation&nbsp;of&nbsp;the&nbsp;module,&nbsp;presenting&nbsp;a&nbsp;console&nbsp;message<br>
+with&nbsp;the&nbsp;percentage&nbsp;of&nbsp;passed&nbsp;tests,&nbsp;returning&nbsp;the&nbsp;amount&nbsp;of&nbsp;passed,<br>
+failed&nbsp;and&nbsp;total&nbsp;tests&nbsp;executed&nbsp;for&nbsp;a&nbsp;module.</tt></dd></dl>
+
+<dl><dt><a name="Suite-execute_suite"><strong>execute_suite</strong></a>(self)</dt><dd><tt>Executes&nbsp;all&nbsp;test&nbsp;cases&nbsp;in&nbsp;a&nbsp;suite.</tt></dd></dl>
+
+<dl><dt><a name="Suite-fail_test"><strong>fail_test</strong></a>(self)</dt><dd><tt>This&nbsp;methods&nbsp;indicates&nbsp;an&nbsp;executed&nbsp;test&nbsp;failed,&nbsp;and&nbsp;proceeds&nbsp;to<br>
+document&nbsp;the&nbsp;statistics&nbsp;on&nbsp;the&nbsp;run.</tt></dd></dl>
+
+<dl><dt><a name="Suite-pass_test"><strong>pass_test</strong></a>(self)</dt><dd><tt>This&nbsp;methods&nbsp;indicates&nbsp;an&nbsp;executed&nbsp;test&nbsp;passed,&nbsp;and&nbsp;proceeds&nbsp;to<br>
+document&nbsp;the&nbsp;statistics&nbsp;on&nbsp;the&nbsp;run.</tt></dd></dl>
+
+<dl><dt><a name="Suite-test_conditions"><strong>test_conditions</strong></a>(self)</dt><dd><tt>Prepares&nbsp;the&nbsp;test&nbsp;conditions&nbsp;for&nbsp;all&nbsp;tests&nbsp;included&nbsp;in&nbsp;a&nbsp;test&nbsp;suite.</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>failed_tests</strong> = 0</dl>
+
+<dl><dt><strong>passed_tests</strong> = 0</dl>
+
+<dl><dt><strong>total_tests</strong> = 0</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="TestRun">class <strong>TestRun</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>This&nbsp;is&nbsp;the&nbsp;wrapper&nbsp;object&nbsp;that&nbsp;handles&nbsp;all&nbsp;created&nbsp;TestSuites&nbsp;of&nbsp;type<br>
+suites.suite.<a href="#Suite">Suite</a>&nbsp;and&nbsp;executed&nbsp;them&nbsp;in&nbsp;sequential&nbsp;order.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="TestRun-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Initializes&nbsp;an&nbsp;empty&nbsp;test&nbsp;list.</tt></dd></dl>
+
+<dl><dt><a name="TestRun-add_suite"><strong>add_suite</strong></a>(self, suite)</dt><dd><tt>Appends&nbsp;a&nbsp;<a href="#Suite">Suite</a>&nbsp;to&nbsp;the&nbsp;current&nbsp;queue&nbsp;of&nbsp;Test&nbsp;Suites&nbsp;to&nbsp;execute</tt></dd></dl>
+
+<dl><dt><a name="TestRun-execute_all_suites"><strong>execute_all_suites</strong></a>(self)</dt><dd><tt>Executes&nbsp;all&nbsp;Test&nbsp;Suites&nbsp;in&nbsp;self.<strong>tests</strong>&nbsp;and&nbsp;prints&nbsp;a&nbsp;Test&nbsp;Run&nbsp;summary<br>
+at&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;execution.</tt></dd></dl>
+
+</td></tr></table></td></tr></table>
+</body></html>

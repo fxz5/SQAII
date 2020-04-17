@@ -9,7 +9,7 @@
 <td valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>utils</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href="..">index</a><br><a href="file:/Users/luiscorrea/Documents/GitHub/SQAII/android-testing/utils/utils.py">/Users/luiscorrea/Documents/GitHub/SQAII/android-testing/utils/utils.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/luiscorrea/Documents/GitHub/SQAII/android-testing/utils/utils.py">/Users/luiscorrea/Documents/GitHub/SQAII/android-testing/utils/utils.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -40,13 +40,17 @@
 <td colspan=3 valign=bottom>&nbsp;<br>
 <font color="#000000" face="helvetica, arial"><a name="AppManager">class <strong>AppManager</strong></a></font></td></tr>
     
-<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Utilities&nbsp;that&nbsp;allow&nbsp;to&nbsp;change&nbsp;an&nbsp;app's&nbsp;state.&nbsp;Open,&nbsp;closing&nbsp;and&nbsp;switching<br>
+app&nbsp;logic&nbsp;is&nbsp;handled&nbsp;by&nbsp;this&nbsp;class.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
 <dl><dt><a name="AppManager-__init__"><strong>__init__</strong></a>(self)</dt></dl>
 
 <hr>
 Static methods defined here:<br>
-<dl><dt><a name="AppManager-kill_app"><strong>kill_app</strong></a>(device_serial, package_name)</dt><dd><tt>Kills&nbsp;and&nbsp;app&nbsp;from&nbsp;the&nbsp;background&nbsp;given&nbsp;the&nbsp;package&nbsp;name.</tt></dd></dl>
+<dl><dt><a name="AppManager-kill_app"><strong>kill_app</strong></a>(device_serial, package_name)</dt><dd><tt>Kills&nbsp;and&nbsp;app&nbsp;though&nbsp;adb&nbsp;and&nbsp;a&nbsp;device's&nbsp;serial&nbsp;connection.&nbsp;Removes<br>
+app&nbsp;from&nbsp;the&nbsp;background&nbsp;given&nbsp;the&nbsp;package&nbsp;name.</tt></dd></dl>
 
 <dl><dt><a name="AppManager-open_app"><strong>open_app</strong></a>(device, device_serial, app_name)</dt><dd><tt>Opens&nbsp;an&nbsp;app&nbsp;given&nbsp;a&nbsp;name&nbsp;from&nbsp;the&nbsp;home&nbsp;screen.</tt></dd></dl>
 
@@ -56,11 +60,15 @@ Static methods defined here:<br>
 <td colspan=3 valign=bottom>&nbsp;<br>
 <font color="#000000" face="helvetica, arial"><a name="Logger">class <strong>Logger</strong></a></font></td></tr>
     
-<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Main&nbsp;structure&nbsp;and&nbsp;functions&nbsp;to&nbsp;interact&nbsp;and&nbsp;write&nbsp;to&nbsp;a&nbsp;logfile&nbsp;in&nbsp;csv<br>
+format.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="Logger-__init__"><strong>__init__</strong></a>(self)</dt></dl>
+<dl><dt><a name="Logger-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Creates&nbsp;necessary&nbsp;directories&nbsp;and&nbsp;files&nbsp;for&nbsp;the&nbsp;logfile&nbsp;to&nbsp;work.</tt></dd></dl>
 
-<dl><dt><a name="Logger-log"><strong>log</strong></a>(self, start, module, test, status, error)</dt></dl>
+<dl><dt><a name="Logger-log"><strong>log</strong></a>(self, start, module, test, status, error)</dt><dd><tt>Logs&nbsp;a&nbsp;message&nbsp;in&nbsp;the&nbsp;specified&nbsp;csv&nbsp;format&nbsp;to&nbsp;disk.&nbsp;default&nbsp;directory<br>
+is&nbsp;log/</tt></dd></dl>
 
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -76,7 +84,11 @@ Static methods defined here:<br>
 
 <hr>
 Static methods defined here:<br>
-<dl><dt><a name="PhoneUtils-click_dial_number"><strong>click_dial_number</strong></a>(device, digit)</dt><dd><tt>Uses&nbsp;UIAutomator&nbsp;to&nbsp;click&nbsp;each&nbsp;digit&nbsp;of&nbsp;a&nbsp;phone&nbsp;number.</tt></dd></dl>
+<dl><dt><a name="PhoneUtils-call_number"><strong>call_number</strong></a>(device, serial, number, use_adb<font color="#909090">=False</font>)</dt><dd><tt>Calls&nbsp;a&nbsp;phone&nbsp;number&nbsp;in&nbsp;runtime&nbsp;and&nbsp;decides&nbsp;if&nbsp;it&nbsp;should&nbsp;use&nbsp;adb&nbsp;or<br>
+UIAutomator,&nbsp;using&nbsp;the&nbsp;specified&nbsp;device.</tt></dd></dl>
+
+<dl><dt><a name="PhoneUtils-click_dial_number"><strong>click_dial_number</strong></a>(device, digit)</dt><dd><tt>Exclusive&nbsp;to&nbsp;UIAutomator,&nbsp;function&nbsp;clicks&nbsp;the&nbsp;desired&nbsp;digit&nbsp;in&nbsp;a<br>
+specified&nbsp;device.</tt></dd></dl>
 
 <dl><dt><a name="PhoneUtils-end_call"><strong>end_call</strong></a>(device, use_adb<font color="#909090">=False</font>)</dt><dd><tt>Ends&nbsp;a&nbsp;call&nbsp;given&nbsp;an&nbsp;interface&nbsp;method&nbsp;(adb&nbsp;or&nbsp;UIAutomator)&nbsp;and&nbsp;returns<br>
 a&nbsp;boolean&nbsp;indicating&nbsp;if&nbsp;the&nbsp;call&nbsp;was&nbsp;ended&nbsp;after&nbsp;being&nbsp;successful.</tt></dd></dl>
@@ -89,19 +101,23 @@ a&nbsp;boolean&nbsp;indicating&nbsp;if&nbsp;the&nbsp;call&nbsp;was&nbsp;ended&nb
 <td colspan=3 valign=bottom>&nbsp;<br>
 <font color="#000000" face="helvetica, arial"><a name="Utils">class <strong>Utils</strong></a></font></td></tr>
     
-<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Miscellaneous&nbsp;utilities&nbsp;for&nbsp;handling&nbsp;apps&nbsp;and&nbsp;wait&nbsp;times&nbsp;between&nbsp;actions.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
 <dl><dt><a name="Utils-__init__"><strong>__init__</strong></a>(self)</dt></dl>
 
 <hr>
 Static methods defined here:<br>
-<dl><dt><a name="Utils-start_home"><strong>start_home</strong></a>(device_serial)</dt></dl>
+<dl><dt><a name="Utils-start_home"><strong>start_home</strong></a>(device_serial)</dt><dd><tt>Uses&nbsp;adb&nbsp;connection&nbsp;trough&nbsp;a&nbsp;specified&nbsp;serial&nbsp;so&nbsp;that&nbsp;the&nbsp;phone&nbsp;it<br>
+forced&nbsp;to&nbsp;go&nbsp;to&nbsp;the&nbsp;home&nbsp;screen.</tt></dd></dl>
 
-<dl><dt><a name="Utils-wait_long"><strong>wait_long</strong></a>()</dt></dl>
+<dl><dt><a name="Utils-wait_long"><strong>wait_long</strong></a>()</dt><dd><tt>Waits&nbsp;for&nbsp;a&nbsp;long&nbsp;10&nbsp;second&nbsp;time.</tt></dd></dl>
 
-<dl><dt><a name="Utils-wait_normal"><strong>wait_normal</strong></a>(extra<font color="#909090">=False</font>)</dt></dl>
+<dl><dt><a name="Utils-wait_normal"><strong>wait_normal</strong></a>(extra<font color="#909090">=False</font>)</dt><dd><tt>Waits&nbsp;a&nbsp;normal&nbsp;time&nbsp;of&nbsp;1&nbsp;second.&nbsp;If&nbsp;the&nbsp;extra&nbsp;flag&nbsp;is&nbsp;true,&nbsp;time<br>
+adds&nbsp;to&nbsp;3&nbsp;seconds.</tt></dd></dl>
 
-<dl><dt><a name="Utils-wait_short"><strong>wait_short</strong></a>()</dt></dl>
+<dl><dt><a name="Utils-wait_short"><strong>wait_short</strong></a>()</dt><dd><tt>Waits&nbsp;a&nbsp;short&nbsp;time&nbsp;of&nbsp;0.5&nbsp;seconds.</tt></dd></dl>
 
 </td></tr></table></td></tr></table>
 </body></html>
