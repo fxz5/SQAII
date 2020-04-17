@@ -17,6 +17,33 @@ class PhoneUtils:
         pass
 
     @staticmethod
+    def call_number(device, serial, number, use_adb=False):
+        # type: (Device, str, str, bool) -> None
+        """
+        Calls a phone number in runtime and decides if it should use adb or
+        UIAutomator, using the specified device.
+        """
+        if use_adb:
+            check_call(
+                ['adb', '-s', serial, 'shell', 'am', 'start',
+                 '-a', 'android.intent.action.CALL', '-d',
+                 'tel:' + str(number)
+                 ])
+            Utils.wait_normal()
+        else:
+            device(
+                resourceId="com.google.android.dialer:id/fab") \
+                .click()
+            for digit in number:
+                PhoneUtils.click_dial_number(device, digit)
+                Utils.wait_short()
+            device(
+                resourceId="com.google.android.dialer:id"
+                           "/dialpad_voice_call_button") \
+                .click()
+            Utils.wait_normal(True)
+
+    @staticmethod
     def click_dial_number(device, digit):
         # type: (Device, str) -> None
         """
@@ -56,7 +83,7 @@ class PhoneUtils:
                 'adb', 'shell', 'input', 'keyevent', 'KEYCODE_ENDCALL'
             ])
             Utils.wait_short()
-            return True
+            return True, None
         else:
             try:
                 if device(text="Cancel",

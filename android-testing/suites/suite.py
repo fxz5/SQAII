@@ -18,7 +18,8 @@ class Suite:
 
     def evaluate_module(self):
         print "Module {} has passed {}% of its tests ({} out of {})" \
-            .format(self.module, self.passed_tests / self.total_tests * 100.0,
+            .format(self.module,
+                    float(self.passed_tests) / float(self.total_tests) * 100.0,
                     self.passed_tests, self.total_tests)
         return self.passed_tests, self.failed_tests, self.total_tests
 
@@ -58,6 +59,6 @@ class TestRun:
             tt += t
 
         print "Test finished with {}% of its tests ({} out of {})" \
-            .format(tp / tt * 100.0,
+            .format(float(tp) / float(tt) * 100.0,
                     tp, tt)
 
