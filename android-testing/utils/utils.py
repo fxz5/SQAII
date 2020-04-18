@@ -17,6 +17,14 @@ class PhoneUtils:
         pass
 
     @staticmethod
+    def process_phone_number(number):
+        # type: (str) -> str
+        """
+        Strips away non numeric and phone characters from a phone number.
+        """
+        return number.replace(" ", "")
+
+    @staticmethod
     def call_number(device, serial, number, use_adb=False):
         # type: (Device, str, str, bool) -> None
         """
@@ -88,17 +96,17 @@ class PhoneUtils:
         else:
             try:
                 if device(text="Cancel",
-                               className="android.widget.Button") \
+                          className="android.widget.Button") \
                         .exists:
                     device(text="Cancel",
-                                className="android.widget.Button") \
+                           className="android.widget.Button") \
                         .click()
                     raise CallFailed("mobile network unavailable")
                 elif device(text="OK",
-                                 className="android.widget.Button") \
+                            className="android.widget.Button") \
                         .exists:
                     device(text="OK",
-                                className="android.widget.Button") \
+                           className="android.widget.Button") \
                         .click()
                     raise CallFailed("network not available")
                 else:
@@ -106,7 +114,7 @@ class PhoneUtils:
                         resourceId="com.google.android.dialer:id/incall_end_call") \
                         .click()
                 Utils.wait_normal()
-                return True
+                return True, None
             except Exception as e:
                 return False, e
 
@@ -123,6 +131,7 @@ class Utils:
     """
     Miscellaneous utilities for handling apps and wait times between actions.
     """
+
     def __init__(self):
         pass
 
@@ -171,6 +180,41 @@ class Utils:
         Utils.wait_short()
 
 
+class WiFiUtils:
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def switch_wifi(device, status):
+        # type: (Device, bool) -> bool
+        if status:
+            if not WiFiUtils.check_wifi_status(device):
+                WiFiUtils.toggle_wifi(device)
+        else:
+            if WiFiUtils.check_wifi_status(device):
+                WiFiUtils.toggle_wifi(device)
+        return WiFiUtils.check_wifi_status(device)
+
+    @staticmethod
+    def check_wifi_status(device, i=0):
+        # type: (Device, int) -> bool
+        device.open.quick_settings()
+        time.sleep(0.3)
+        return True if device(index=i, className="android.widget.Switch") \
+                           .info['text'] == 'On' else False
+
+    @staticmethod
+    def toggle_wifi(device):
+        # type: (Device) -> None
+        """
+        Toggles WiFi State from Quick Settings through a device connection.
+        """
+        device.open.quick_settings()
+        time.sleep(0.3)
+        device(index=0, className="android.widget.Switch").click()
+        time.sleep(0.3)
+
+
 class AppUtils:
     """
     Utilities that allow to change an app's state. Open, closing and switching
@@ -208,6 +252,7 @@ class Logger:
     Main structure and functions to interact and write to a logfile in csv
     format.
     """
+
     def __init__(self):
         # Session Initialized
         """
@@ -230,12 +275,12 @@ class Logger:
             end = datetime.datetime.now()
             log_string = "\n{}, {}, {}, {}, {}, {}, {}" \
                 .format(
-                    start.strftime("%H:%M:%S"),
-                    end.strftime("%H:%M:%S"),
-                    end-start,
-                    module,
-                    test,
-                    status,
-                    error
-                )
+                start.strftime("%H:%M:%S"),
+                end.strftime("%H:%M:%S"),
+                end - start,
+                module,
+                test,
+                status,
+                error
+            )
             logfile.write(log_string)
