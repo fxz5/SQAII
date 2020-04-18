@@ -3,7 +3,7 @@
 Maintained by Luis Correa
 luiscorrea9614@gmail.com
 
-## Run Instructions
+## SetUp Instructions
 1. Clone the repo  
 ```bash
 git clone https://github.com/PrettyBoyHelios/SQAII
@@ -31,6 +31,9 @@ python main.py
 * suites: all the testing suites for the project, each module will be contained in a python file that follows the structure {module}_suite.py
 * utils: common routines repeated across multiple testing suites in the project, for easy instantiation and use.
 * main.py: main program, docs for flags to run will be detailed in further sections.
+
+### Framework Architecture
+![Arch](release_notes/img/SQA%20Architechture%20Framework%20-%20Framework%20(1).png)
 
 ## Contributing
 
