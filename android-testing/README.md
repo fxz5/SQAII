@@ -45,5 +45,4 @@ All contributions to this repository must be through the creation of Pull Reques
 The testing framework generates csv files, separated by date under the log/ folder. Application reports are stored under the CSV format so that test results can be easily imported into Microsoft Excel or any other spreadsheet software.
 
 ## External Files
-* Test Plan: file describing test plan.
-* Release Notes: summary for the testing activities and reporting of such.
+* [Google Drive Documentation (Test Cases, Traceability Matrix & Release Notes)](https://drive.google.com/open?id=1pelShQtyow9NMS0PA6iN6ZUeSb7uAv8X)

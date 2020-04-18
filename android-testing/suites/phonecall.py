@@ -20,9 +20,10 @@ class PhoneCallSuite(Suite):
         self.app = "Phone"
         self.package = "com.google.android.dialer"
         self.module = "PhoneCall"
+        if self.use_adb:
+            self.module += "ADB"
 
     def execute_suite(self):
-        self.call_number(False)
         self.call_number(True)
 
     def call_number(self, use_json=False):
@@ -51,6 +52,8 @@ class PhoneCallSuite(Suite):
 
             # Actual Calling of Numbers
             for number in phone_numbers:
+                number = PhoneUtils.process_phone_number(number)
+                print "Dialing number " + number
                 current_test_case = test_case_name + "-" + str(number)
                 if self.use_adb:
                     PhoneUtils.call_number(self.device, self.serial, number, self.use_adb)
@@ -59,7 +62,6 @@ class PhoneCallSuite(Suite):
                         raise e
                 else:
                     self.test_conditions()
-                    Utils.wait_short()
                     PhoneUtils.call_number(self.device, self.serial,
                                            str(number), self.use_adb)
                     success, e = PhoneUtils.end_call(self.device, self.use_adb)
@@ -83,4 +85,5 @@ class PhoneCallSuite(Suite):
         Utils.start_home(self.serial)
         AppUtils.kill_app(self.serial, self.package)
         AppUtils.open_app(self.device, self.serial, self.app)
+        Utils.wait_short()
 

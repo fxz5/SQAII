@@ -1,3 +1,4 @@
+import datetime
 from models.manager import DeviceManager
 from utils.utils import Logger
 
@@ -92,6 +93,7 @@ class TestRun:
         Executes all Test Suites in self.tests and prints a Test Run summary
         at the end of the execution.
         """
+        start_time = datetime.datetime.now()
         tp = 0
         tf = 0
         tt = 0
@@ -102,6 +104,9 @@ class TestRun:
             tf += f
             tt += t
 
-        print "Test finished with {}% of its tests ({} out of {})" \
+        print "\nTest finished with {}% of its tests ({} out of {})" \
             .format(float(tp) / float(tt) * 100.0,
                     tp, tt)
+
+        end_time = datetime.datetime.now()
+        print "TestRun took {} seconds to complete".format(end_time-start_time)
