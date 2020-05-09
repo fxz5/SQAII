@@ -67,13 +67,13 @@ class PhoneCallSuite(Suite):
                     success, e = PhoneUtils.end_call(self.device, self.use_adb)
                     if not success:
                         raise e
-                self.logger.log(start_time,
+                self.logger.log(self.serial, start_time,
                                 self.module,
                                 current_test_case, "SUCCESS",
                                 "")
                 self.pass_test()
         except Exception as e:
-            self.logger.log(start_time, self.module,
+            self.logger.log(self.serial, start_time, self.module,
                             current_test_case,
                             "ERROR", str(e) + e.message)
             self.fail_test()

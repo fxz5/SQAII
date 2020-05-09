@@ -35,13 +35,13 @@ class WiFiSettingsSuite(Suite):
             status = WiFiUtils.check_wifi_status(self.device)
             if status:
                 self.pass_test()
-                self.logger.log(start_time,
+                self.logger.log(self.serial, start_time,
                                 self.module,
                                 current_test_case, "SUCCESS",
                                 "")
                 return
         self.fail_test()
-        self.logger.log(start_time, self.module,
+        self.logger.log(self.serial, start_time, self.module,
                         current_test_case,
                         "ERROR", "WiFi is not On")
 
@@ -54,13 +54,13 @@ class WiFiSettingsSuite(Suite):
             status = WiFiUtils.check_wifi_status(self.device)
             if status:
                 self.pass_test()
-                self.logger.log(start_time,
+                self.logger.log(self.serial, start_time,
                                 self.module,
                                 current_test_case, "SUCCESS",
                                 "")
                 return
         self.fail_test()
-        self.logger.log(start_time, self.module,
+        self.logger.log(self.serial, start_time, self.module,
                         current_test_case,
                         "ERROR", "WiFi is not On")
 
@@ -72,13 +72,13 @@ class WiFiSettingsSuite(Suite):
             status = WiFiUtils.switch_wifi(self.device, False)
             if not status:
                 self.pass_test()
-                self.logger.log(start_time,
+                self.logger.log(self.serial, start_time,
                                 self.module,
                                 current_test_case, "SUCCESS",
                                 "")
                 return
         self.fail_test()
-        self.logger.log(start_time, self.module,
+        self.logger.log(self.serial, start_time, self.module,
                         current_test_case,
                         "ERROR", "WiFi is not On")
 
@@ -90,13 +90,13 @@ class WiFiSettingsSuite(Suite):
             status = WiFiUtils.switch_wifi(self.device, False)
             if not status:
                 self.pass_test()
-                self.logger.log(start_time,
+                self.logger.log(self.serial, start_time,
                                 self.module,
                                 current_test_case, "SUCCESS",
                                 "")
                 return
         self.fail_test()
-        self.logger.log(start_time, self.module,
+        self.logger.log(self.serial, start_time, self.module,
                         current_test_case,
                         "ERROR", "WiFi is not On")
 

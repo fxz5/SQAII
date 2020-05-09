@@ -209,9 +209,12 @@ class WiFiUtils:
         """
         Toggles WiFi State from Quick Settings through a device connection.
         """
+        print "opening quick settings"
         device.open.quick_settings()
-        time.sleep(0.3)
-        device(index=0, className="android.widget.Switch").click()
+        time.sleep(2)
+        device(index=0, className="android.widget.Switch").child(
+            className="android.widget.FrameLayout"
+        ).click()
         time.sleep(0.3)
 
 
@@ -265,16 +268,17 @@ class Logger:
         if not os.path.exists('log'):
             os.makedirs('log')
 
-    def log(self, start, module, test, status, error):
-        # type: (datetime.datetime,str, str, str, str) -> None
+    def log(self, device, start, module, test, status, error):
+        # type: (str, datetime.datetime, str, str, str, str) -> None
         """
         Logs a message in the specified csv format to disk. default directory
         is log/
         """
         with open(self.file, "a+") as logfile:
             end = datetime.datetime.now()
-            log_string = "\n{}, {}, {}, {}, {}, {}, {}" \
+            log_string = "\n{}, {}, {}, {}, {}, {}, {}, {}" \
                 .format(
+                device,
                 start.strftime("%H:%M:%S"),
                 end.strftime("%H:%M:%S"),
                 end - start,

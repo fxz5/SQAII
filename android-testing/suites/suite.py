@@ -93,6 +93,7 @@ class TestRun:
         Executes all Test Suites in self.tests and prints a Test Run summary
         at the end of the execution.
         """
+        print "Will execute a total of " + str(len(self.tests)) + " suites."
         start_time = datetime.datetime.now()
         tp = 0
         tf = 0
