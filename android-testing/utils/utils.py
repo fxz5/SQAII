@@ -8,6 +8,43 @@ from uiautomator import Device
 from models.exceptions import CallFailed
 
 
+class CalculatorUtils:
+    """
+    Static methods that provide helpful and repetitive functionality to
+    the calculator app
+    """
+
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def input_digit(device, digit):
+        # type: (Device, str) -> None
+        base = "com.google.android.calculator:id/"
+        digit_map = {
+            "1": "digit_1", "2": "digit_2", "3": "digit_3",
+            "4": "digit_4", "5": "digit_5", "6": "digit_6",
+            "7": "digit_7", "8": "digit_8", "9": "digit_9",
+            "0": "digit_0", "+": "op_add", "-": "op_sub",
+            "*": "op_mul", "/": "op_div"
+        }
+        
+        CalculatorUtils.click_button(device, base + digit_map[digit])
+
+    @staticmethod
+    def click_button(device, button):
+        # type: (Device, str) -> None
+        device(resourceId=button).click()
+
+    @staticmethod
+    def get_result(device):
+        # type: (Device) -> str
+        device(resourceId="com.google.android.calculator:id/eq").click()
+        return device(
+            resourceId="com.google.android.calculator:id/result_final") \
+            .info['text']
+
+
 class PhoneUtils:
     """
     Static methods that provide functionality for the Phone Android app.
