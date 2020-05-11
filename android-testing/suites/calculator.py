@@ -55,15 +55,9 @@ class CalculatorSuite(Suite):
         """
         Compares results and determines log and test output.
         """
-        print expected
-        print result
-        print test_case
-        print time
         if expected == result:
-            print "PASSED"
             self.pass_test(test_case, time)
         else:
-            print "NOT EPIC"
             self.fail_test(test_case, time,
                            error="(expected:received) (" + expected + ":" +
                                  result + ")")

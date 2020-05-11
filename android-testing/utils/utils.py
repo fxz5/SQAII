@@ -32,24 +32,24 @@ class CalculatorUtils:
             "*": "op_mul", "/": "op_div", ".": "dec_point",
             "(": "lparen", ")": "rparen", "^": "op_pow"
         }
+        resource_id = base + digit_map[digit]
         special_chars = ["(", ")", "^"]
         if digit in special_chars:
-            CalculatorUtils.open_advanced(device)
-        CalculatorUtils.click_button(device, base + digit_map[digit])
-        if digit in special_chars:
-            CalculatorUtils.close_advanced(device)
+            CalculatorUtils.handle_advanced(device, resource_id)
+        else:
+            CalculatorUtils.click_button(device, base + digit_map[digit])
 
     @staticmethod
-    def open_advanced(device):
-        # type: (Device) -> None
-        device.swipe(device.width - 30, device.height * 2 / 3,
-                     device.width / 2, device.height * 2 / 3, steps=20)
-
-    @staticmethod
-    def close_advanced(device):
-        # type: (Device) -> None
-        device.swipe(30, device.height * 2 / 3,
-                     device.width - 30, device.height * 2 / 3, steps=20)
+    def handle_advanced(device, res_id):
+        # type: (Device, str) -> None
+        if device(resourceId=res_id).exists:
+            device(resourceId=res_id).click()
+        else:
+            device.swipe(device.width - 30, device.height * 2 / 3,
+                         device.width / 2, device.height * 2 / 3, steps=20)
+            device(resourceId=res_id).click()
+            device.swipe(30, device.height * 2 / 3,
+                         device.width - 30, device.height * 2 / 3, steps=20)
 
     @staticmethod
     def click_button(device, button):
