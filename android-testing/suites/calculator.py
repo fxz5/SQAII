@@ -76,7 +76,8 @@ class CalculatorSuite(Suite):
         """
         Sets initial test conditions.
         """
-        Utils.start_home(self.serial)
-        AppUtils.kill_app(self.serial, self.package)
-        AppUtils.open_app(self.device, self.serial, self.app)
-        Utils.wait_short()
+        if not CalculatorUtils.clear_calc(self.device):
+            Utils.start_home(self.serial)
+            AppUtils.kill_app(self.serial, self.package)
+            AppUtils.open_app(self.device, self.serial, self.app)
+            Utils.wait_short()

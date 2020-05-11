@@ -40,6 +40,22 @@ class CalculatorUtils:
             CalculatorUtils.click_button(device, base + digit_map[digit])
 
     @staticmethod
+    def clear_calc(device):
+        # type: (Device) -> bool
+        """
+        If calculator clear button exists, press it. Returns a bool describing
+        if the calculator was cleared.
+        """
+        clear_button = "com.google.android.calculator:id/clr"
+        if device(resourceId=clear_button).exists:
+            print "Exists"
+            device(resourceId=clear_button).click()
+            return True
+        else:
+            print "Does not"
+            return False
+
+    @staticmethod
     def handle_advanced(device, res_id):
         # type: (Device, str) -> None
         if device(resourceId=res_id).exists:
