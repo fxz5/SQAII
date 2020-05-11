@@ -48,11 +48,9 @@ class CalculatorUtils:
         """
         clear_button = "com.google.android.calculator:id/clr"
         if device(resourceId=clear_button).exists:
-            print "Exists"
             device(resourceId=clear_button).click()
             return True
         else:
-            print "Does not"
             return False
 
     @staticmethod
