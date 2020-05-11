@@ -35,7 +35,7 @@ class CalculatorSuite(Suite):
             self.pass_test(test_case, time)
         else:
             self.fail_test(test_case, time,
-                           error="(expected, received) (" + expected+ ", " +
+                           error="(expected, received) (" + expected + ", " +
                                  result + ")")
 
     @staticmethod

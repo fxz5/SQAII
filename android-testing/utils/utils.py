@@ -26,10 +26,27 @@ class CalculatorUtils:
             "4": "digit_4", "5": "digit_5", "6": "digit_6",
             "7": "digit_7", "8": "digit_8", "9": "digit_9",
             "0": "digit_0", "+": "op_add", "-": "op_sub",
-            "*": "op_mul", "/": "op_div"
+            "*": "op_mul", "/": "op_div", ".": "dec_point",
+            "(": "lparen", ")": "rparen"
         }
-
+        special_chars = ["(", ")"]
+        if digit in special_chars:
+            CalculatorUtils.open_advanced(device)
         CalculatorUtils.click_button(device, base + digit_map[digit])
+        if digit in special_chars:
+            CalculatorUtils.close_advanced(device)
+
+    @staticmethod
+    def open_advanced(device):
+        # type: (Device) -> None
+        device.swipe(device.width - 30, device.height * 2 / 3,
+                     device.width / 2, device.height * 2 / 3, steps=20)
+
+    @staticmethod
+    def close_advanced(device):
+        # type: (Device) -> None
+        device.swipe(30, device.height * 2 / 3,
+                     device.width - 30, device.height * 2 / 3, steps=20)
 
     @staticmethod
     def click_button(device, button):
