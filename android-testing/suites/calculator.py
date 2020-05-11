@@ -2,6 +2,7 @@ import json, datetime
 
 from typing import Optional
 
+from models.TestCaseStatus import TCStatus
 from models.manager import DeviceManager
 from suites.suite import Suite
 from utils.utils import Logger, Utils, AppUtils, CalculatorUtils
@@ -11,10 +12,8 @@ class CalculatorSuite(Suite):
     def __init__(self, d, logger):
         # type: (DeviceManager, Logger) -> None
         print "Initializing PhoneCall Component"
-        Suite.__init__(self, d, logger)
-        self.app = "Calculator"
-        self.package = "com.google.android.calculator"
-        self.module = "Calculator"
+        Suite.__init__(self, d, logger, "Calculator", "Calculator",
+                       "com.google.android.calculator")
 
     def execute_suite(self):
         self.cal_001()
@@ -29,21 +28,15 @@ class CalculatorSuite(Suite):
             for digit in element:
                 CalculatorUtils.input_digit(self.device, digit)
         actual_result = CalculatorUtils.get_result(self.device)
-        print actual_result
         self.__compare_results(result, actual_result, "cal_001", start_time)
 
     def __compare_results(self, expected, result, test_case, time):
         if expected == result:
-            self.pass_test()
-            self.logger.log(self.serial, time,
-                            self.module, test_case, "SUCCESS", "")
+            self.pass_test(test_case, time)
         else:
-            self.fail_test()
-            self.logger.log(self.serial, time,
-                            self.module,
-                            test_case,
-                            "ERROR", "(expected, received) (" +
-                            expected + ", " + result + ")")
+            self.fail_test(test_case, time,
+                           error="(expected, received) (" + expected+ ", " +
+                                 result + ")")
 
     @staticmethod
     def __read_test_case(test_case):

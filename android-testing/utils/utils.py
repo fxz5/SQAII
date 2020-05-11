@@ -28,7 +28,7 @@ class CalculatorUtils:
             "0": "digit_0", "+": "op_add", "-": "op_sub",
             "*": "op_mul", "/": "op_div"
         }
-        
+
         CalculatorUtils.click_button(device, base + digit_map[digit])
 
     @staticmethod

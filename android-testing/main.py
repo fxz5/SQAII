@@ -11,15 +11,15 @@ log = Logger()
 
 suites = list()
 for device in dev_man.devices:
-    """phone_suite = PhoneCallSuite(device, log, False)
-    phone_suite_adb = PhoneCallSuite(device, log, True)
-    wifi_suite = WiFiSettingsSuite(device, log)"""
-    calculator_suite = CalculatorSuite(device, log)
+    # phone_suite = PhoneCallSuite(device, log, False)
+    # phone_suite_adb = PhoneCallSuite(device, log, True)
+    wifi_suite = WiFiSettingsSuite(device, log)
+    # calculator_suite = CalculatorSuite(device, log)
 
-    """suites.append(phone_suite)
-    suites.append(phone_suite_adb)
-    suites.append(wifi_suite)"""
-    suites.append(calculator_suite)
+    # suites.append(phone_suite)
+    # suites.append(phone_suite_adb)
+    suites.append(wifi_suite)
+    # suites.append(calculator_suite)
 
 test = TestRun()
 for suite in suites:

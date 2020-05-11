@@ -2,7 +2,7 @@ import json
 import datetime
 
 from models.exceptions import CallFailed
-from models.manager import DeviceManager
+from models.manager import DeviceUnit
 from suites.suite import Suite
 from utils.utils import AppUtils, Utils, Logger, PhoneUtils
 
@@ -13,15 +13,14 @@ class PhoneCallSuite(Suite):
     failed_tests = 0
 
     def __init__(self, d, logger, use_adb=False):
-        # type: (DeviceManager, Logger, bool) -> None
+        # type: (DeviceUnit, Logger, bool) -> None
         print "Initializing PhoneCall Component"
-        Suite.__init__(self, d, logger)
         self.use_adb = use_adb
-        self.app = "Phone"
-        self.package = "com.google.android.dialer"
-        self.module = "PhoneCall"
-        if self.use_adb:
-            self.module += "ADB"
+        module = "PhoneCall"
+        if use_adb:
+            module += "-ADB"
+        Suite.__init__(self, d, logger, module,
+                       "Phone", "com.google.android.dialer")
 
     def execute_suite(self):
         self.call_number(True)
@@ -40,9 +39,11 @@ class PhoneCallSuite(Suite):
             if not use_json:
                 test_case_name += "-Manual"
                 current_test_case = ""
-                amount = int(raw_input("how many numbers do you want to test? "))
+                amount = int(
+                    raw_input("how many numbers do you want to test? "))
                 for i in range(amount):
-                    number = str(raw_input("enter phone number " + str(i+1) + ": "))
+                    number = str(
+                        raw_input("enter phone number " + str(i + 1) + ": "))
                     phone_numbers.append(number)
             else:
                 test_case_name += "-JSON"
@@ -56,7 +57,8 @@ class PhoneCallSuite(Suite):
                 print "Dialing number " + number
                 current_test_case = test_case_name + "-" + str(number)
                 if self.use_adb:
-                    PhoneUtils.call_number(self.device, self.serial, number, self.use_adb)
+                    PhoneUtils.call_number(self.device, self.serial, number,
+                                           self.use_adb)
                     success, e = PhoneUtils.end_call(self.device, self.use_adb)
                     if not success:
                         raise e
@@ -67,16 +69,10 @@ class PhoneCallSuite(Suite):
                     success, e = PhoneUtils.end_call(self.device, self.use_adb)
                     if not success:
                         raise e
-                self.logger.log(self.serial, start_time,
-                                self.module,
-                                current_test_case, "SUCCESS",
-                                "")
-                self.pass_test()
+                self.pass_test("PhoneCall Test Case", start_time)
         except Exception as e:
-            self.logger.log(self.serial, start_time, self.module,
-                            current_test_case,
-                            "ERROR", str(e) + e.message)
-            self.fail_test()
+            self.fail_test("PhoneCall Test Case",
+                           start_time, str(e) + e.message)
 
     def test_conditions(self):
         """
@@ -86,4 +82,3 @@ class PhoneCallSuite(Suite):
         AppUtils.kill_app(self.serial, self.package)
         AppUtils.open_app(self.device, self.serial, self.app)
         Utils.wait_short()
-

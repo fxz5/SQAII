@@ -1,5 +1,7 @@
 import datetime
-from models.manager import DeviceManager
+
+from models.TestCaseStatus import TCStatus
+from models.manager import DeviceUnit
 from utils.utils import Logger
 
 
@@ -14,8 +16,8 @@ class Suite:
     passed_tests = 0  # type: int  # amount of tests passed for a suite
     failed_tests = 0  # type: int  # amount of tests failed for a suite
 
-    def __init__(self, d, logger):
-        # type: (DeviceManager, Logger) -> None
+    def __init__(self, d, logger, module, app, package):
+        # type: (DeviceUnit, Logger, str, str, str) -> None
         """
         Initializes main components of the suite, the Device, Serial and
         Logger references for all the suites to add.
@@ -23,9 +25,18 @@ class Suite:
         self.device = d.get_device()
         self.serial = d.get_serial()
         self.logger = logger
-        self.app = ""
-        self.package = ""
-        self.module = ""
+        self.app = app
+        self.package = package
+        self.module = module
+
+    def __log(self, start, test, status, error=None):
+        # type: (datetime.datetime, str, TCStatus, str) -> None
+        if status == TCStatus.failed:
+            self.logger.log(self.serial, start,
+                            self.module, test, "FAILED", str(error))
+        else:
+            self.logger.log(self.serial, start,
+                            self.module, test, "PASSED", "")
 
     def evaluate_module(self):
         # type: () -> (int, int, int)
@@ -40,21 +51,23 @@ class Suite:
                     self.passed_tests, self.total_tests)
         return self.passed_tests, self.failed_tests, self.total_tests
 
-    def fail_test(self):
+    def fail_test(self, test_case, start, error):
         """
         This methods indicates an executed test failed, and proceeds to
         document the statistics on the run.
         """
         self.failed_tests += 1
         self.total_tests += 1
+        self.__log(start, test_case, TCStatus.failed, error)
 
-    def pass_test(self):
+    def pass_test(self, test_case, start):
         """
         This methods indicates an executed test passed, and proceeds to
         document the statistics on the run.
         """
         self.passed_tests += 1
         self.total_tests += 1
+        self.__log(start, test_case, TCStatus.passed)
 
     def execute_suite(self):
         """
