@@ -45,11 +45,15 @@ class Suite:
         with the percentage of passed tests, returning the amount of passed,
         failed and total tests executed for a module.
         """
-        print "Module {} has passed {}% of its tests ({} out of {})" \
-            .format(self.module,
-                    float(self.passed_tests) / float(self.total_tests) * 100.0,
-                    self.passed_tests, self.total_tests)
-        return self.passed_tests, self.failed_tests, self.total_tests
+        try:
+            print "Module {} has passed {}% of its tests ({} out of {})" \
+                .format(self.module,
+                        float(self.passed_tests) / float(self.total_tests) * 100.0,
+                        self.passed_tests, self.total_tests)
+            return self.passed_tests, self.failed_tests, self.total_tests
+        except Exception as e:
+            print "There were no detected test cases to run. Please add some" \
+                  "and rerun the suite."
 
     def fail_test(self, test_case, start, error):
         """
@@ -111,8 +115,10 @@ class TestRun:
         tp = 0
         tf = 0
         tt = 0
+
         for i in self.tests:
             i.execute_suite()
+
             p, f, t = i.evaluate_module()
             tp += p
             tf += f

@@ -1,3 +1,4 @@
+# coding=utf-8
 import time
 from subprocess import check_call, call
 import datetime
@@ -6,6 +7,9 @@ import os
 from uiautomator import Device
 
 from models.exceptions import CallFailed
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 
 class CalculatorUtils:
@@ -13,7 +17,6 @@ class CalculatorUtils:
     Static methods that provide helpful and repetitive functionality to
     the calculator app
     """
-
     def __init__(self):
         pass
 
@@ -27,9 +30,9 @@ class CalculatorUtils:
             "7": "digit_7", "8": "digit_8", "9": "digit_9",
             "0": "digit_0", "+": "op_add", "-": "op_sub",
             "*": "op_mul", "/": "op_div", ".": "dec_point",
-            "(": "lparen", ")": "rparen"
+            "(": "lparen", ")": "rparen", "^": "op_pow"
         }
-        special_chars = ["(", ")"]
+        special_chars = ["(", ")", "^"]
         if digit in special_chars:
             CalculatorUtils.open_advanced(device)
         CalculatorUtils.click_button(device, base + digit_map[digit])
@@ -57,9 +60,11 @@ class CalculatorUtils:
     def get_result(device):
         # type: (Device) -> str
         device(resourceId="com.google.android.calculator:id/eq").click()
-        return device(
+        res = device(
             resourceId="com.google.android.calculator:id/result_final") \
             .info['text']
+        res = res.replace(u'\u2212', '-')
+        return res
 
 
 class PhoneUtils:
