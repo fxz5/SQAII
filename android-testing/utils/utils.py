@@ -1,3 +1,4 @@
+# coding=utf-8
 import time
 from subprocess import check_call, call
 import datetime
@@ -6,6 +7,96 @@ import os
 from uiautomator import Device
 
 from models.exceptions import CallFailed
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+
+
+class CalculatorUtils:
+    """
+    Static methods that provide helpful and repetitive functionality to
+    the calculator app
+    """
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def input_digit(device, digit):
+        # type: (Device, str) -> None
+        """
+        Handles the input for all of the supported operations of the suite.
+        :param device: device onto which to execute the input.
+        :param digit: the digit to be used as an input.
+        :return:
+        """
+        base = "com.google.android.calculator:id/"
+        digit_map = {
+            "1": "digit_1", "2": "digit_2", "3": "digit_3",
+            "4": "digit_4", "5": "digit_5", "6": "digit_6",
+            "7": "digit_7", "8": "digit_8", "9": "digit_9",
+            "0": "digit_0", "+": "op_add", "-": "op_sub",
+            "*": "op_mul", "/": "op_div", ".": "dec_point",
+            "(": "lparen", ")": "rparen", "^": "op_pow"
+        }
+        resource_id = base + digit_map[digit]
+        special_chars = ["(", ")", "^"]
+        if digit in special_chars:
+            CalculatorUtils.handle_advanced(device, resource_id)
+        else:
+            CalculatorUtils.click_button(device, base + digit_map[digit])
+
+    @staticmethod
+    def clear_calc(device):
+        # type: (Device) -> bool
+        """
+        If calculator clear button exists, press it. Returns a bool describing
+        if the calculator was cleared.
+        """
+        clear_button = "com.google.android.calculator:id/clr"
+        if device(resourceId=clear_button).exists:
+            device(resourceId=clear_button).click()
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def handle_advanced(device, res_id):
+        # type: (Device, str) -> None
+        """
+        Handles presence of advanced options. If they appear on screen, simply click on the desired button, if not,
+        swipe to open the advanced operations panel.
+        :param device: device to perform the input in.
+        :param res_id: resource id of the desired input button.
+        :return:
+        """
+        if device(resourceId=res_id).exists:
+            device(resourceId=res_id).click()
+        else:
+            device.swipe(device.width - 30, device.height * 2 / 3,
+                         device.width / 2, device.height * 2 / 3, steps=20)
+            device(resourceId=res_id).click()
+            device.swipe(30, device.height * 2 / 3,
+                         device.width - 30, device.height * 2 / 3, steps=20)
+
+    @staticmethod
+    def click_button(device, button):
+        # type: (Device, str) -> None
+        device(resourceId=button).click()
+
+    @staticmethod
+    def get_result(device):
+        # type: (Device) -> str
+        """
+        Retrieves the calculator's result and replaces unicode characters that do not match.
+        :param device: device: device to perform the input in.
+        :return: string with the result's content.
+        """
+        device(resourceId="com.google.android.calculator:id/eq").click()
+        res = device(
+            resourceId="com.google.android.calculator:id/result_final") \
+            .info['text']
+        res = res.replace(u'\u2212', '-')
+        return res
 
 
 class PhoneUtils:
@@ -209,9 +300,12 @@ class WiFiUtils:
         """
         Toggles WiFi State from Quick Settings through a device connection.
         """
+        print "opening quick settings"
         device.open.quick_settings()
-        time.sleep(0.3)
-        device(index=0, className="android.widget.Switch").click()
+        time.sleep(2)
+        device(index=0, className="android.widget.Switch").child(
+            className="android.widget.FrameLayout"
+        ).click()
         time.sleep(0.3)
 
 
@@ -265,16 +359,17 @@ class Logger:
         if not os.path.exists('log'):
             os.makedirs('log')
 
-    def log(self, start, module, test, status, error):
-        # type: (datetime.datetime,str, str, str, str) -> None
+    def log(self, device, start, module, test, status, error):
+        # type: (str, datetime.datetime, str, str, str, str) -> None
         """
         Logs a message in the specified csv format to disk. default directory
         is log/
         """
         with open(self.file, "a+") as logfile:
             end = datetime.datetime.now()
-            log_string = "\n{}, {}, {}, {}, {}, {}, {}" \
+            log_string = "\n{}, {}, {}, {}, {}, {}, {}, {}" \
                 .format(
+                device,
                 start.strftime("%H:%M:%S"),
                 end.strftime("%H:%M:%S"),
                 end - start,

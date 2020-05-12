@@ -1,18 +1,19 @@
 from models.manager import DeviceManager
-from suites.phonecall import PhoneCallSuite
+from suites.calculator import CalculatorSuite
 from suites.suite import TestRun
-from suites.wifi_settings import WiFiSettingsSuite
 from utils.utils import Logger
 
-dev_man = DeviceManager()
+dev_man = DeviceManager(1)
+dev_man.show_devices()
 log = Logger()
 
-phone_suite = PhoneCallSuite(dev_man, log, False)
-phone_suite_adb = PhoneCallSuite(dev_man, log, True)
-wifi_suite = WiFiSettingsSuite(dev_man, log)
+suites = list()
+tests = [CalculatorSuite]
+for device in dev_man.devices:
+    for test_type in tests:
+        suites.append(test_type(device, log))
 
 test = TestRun()
-test.add_suite(phone_suite)
-test.add_suite(phone_suite_adb)
-test.add_suite(wifi_suite)
+for suite in suites:
+    test.add_suite(suite)
 test.execute_all_suites()
