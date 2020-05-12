@@ -2,6 +2,16 @@
 SDET: Luis Enrique Correa Morán
 May 11th 2020
 
+## Changelog
+* Refactored logging and Suite modules, to make logging and test case passing/failing declarations easier in code.
+* Added CalculatorSuite for the Calculator module. Currently supports the following operations.
+    * Addition
+    * Subtraction
+    * Multiplication
+    * Division
+    * Power (EXPERIMENTAL)
+* Support for ADR (Asynchronous Device Running) for Test Cases on multiple devices.
+
 ## Scope
 This release present the results for the second development stage and testing round for the Android Testing Suite. The first three modules, namely the PhoneApp, WiFi Settings & Calculator App modules will be considered for the testing process.
 
