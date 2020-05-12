@@ -1,8 +1,6 @@
 from models.manager import DeviceManager
 from suites.calculator import CalculatorSuite
-from suites.phonecall import PhoneCallSuite
 from suites.suite import TestRun
-from suites.wifi_settings import WiFiSettingsSuite
 from utils.utils import Logger
 
 dev_man = DeviceManager(1)

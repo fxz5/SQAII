@@ -23,6 +23,12 @@ class CalculatorUtils:
     @staticmethod
     def input_digit(device, digit):
         # type: (Device, str) -> None
+        """
+        Handles the input for all of the supported operations of the suite.
+        :param device: device onto which to execute the input.
+        :param digit: the digit to be used as an input.
+        :return:
+        """
         base = "com.google.android.calculator:id/"
         digit_map = {
             "1": "digit_1", "2": "digit_2", "3": "digit_3",
@@ -56,6 +62,13 @@ class CalculatorUtils:
     @staticmethod
     def handle_advanced(device, res_id):
         # type: (Device, str) -> None
+        """
+        Handles presence of advanced options. If they appear on screen, simply click on the desired button, if not,
+        swipe to open the advanced operations panel.
+        :param device: device to perform the input in.
+        :param res_id: resource id of the desired input button.
+        :return:
+        """
         if device(resourceId=res_id).exists:
             device(resourceId=res_id).click()
         else:
@@ -73,6 +86,11 @@ class CalculatorUtils:
     @staticmethod
     def get_result(device):
         # type: (Device) -> str
+        """
+        Retrieves the calculator's result and replaces unicode characters that do not match.
+        :param device: device: device to perform the input in.
+        :return: string with the result's content.
+        """
         device(resourceId="com.google.android.calculator:id/eq").click()
         res = device(
             resourceId="com.google.android.calculator:id/result_final") \
