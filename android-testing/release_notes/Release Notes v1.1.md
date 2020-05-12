@@ -1,4 +1,4 @@
-# Release Notes for Android Testing Suite v1.0
+# Release Notes for Android Testing Suite v1.1
 SDET: Luis Enrique Correa Morán
 May 11th 2020
 
