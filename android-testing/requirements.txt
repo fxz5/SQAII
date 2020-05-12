@@ -9,6 +9,7 @@ mccabe==0.6.1
 pylint==1.9.5
 singledispatch==3.4.0.3
 six==1.14.0
+typing==3.7.4.1
 uiautomator==0.3.6
 urllib3==1.25.8
 wrapt==1.12.1
