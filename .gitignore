@@ -11,3 +11,4 @@ android-testing/.idea/vcs.xml
 .idea/vcs.xml
 android-testing/data/phone.json
 android-testing/data/phone.json
+android-testing/conf/credentials.json
